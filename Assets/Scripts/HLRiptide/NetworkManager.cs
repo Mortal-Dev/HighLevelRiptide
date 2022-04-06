@@ -100,10 +100,7 @@ namespace HLRiptide
 
             if (runOnFixedUpdate) StepTime = Time.fixedDeltaTime;
             else StepTime = updateRate;
-        }
 
-        private void Start()
-        {
             if (startServerInstantly) StartServer(defaultPort, maxPlayerCount);
         }
         
@@ -118,7 +115,7 @@ namespace HLRiptide
 
             Network.Start(new ServerNetworkStartInfo(() => OnServerStart?.Invoke(), (ushort id) => OnServerClientBeginConnected?.Invoke(id), (ushort id) => OnServerClientFinishConnected?.Invoke(id),
                 (ushort id) => OnServerClientDisconnect?.Invoke(id), (ushort id) => OnServerClientBeginLoadScene?.Invoke(id), (ushort id) => OnServerClientFinishLoadScene?.Invoke(id), 
-                () => OnTick?.Invoke(), defaultSceneIndex, defaultPort, maxPlayer));
+                () => OnTick?.Invoke(), defaultSceneIndex, port, maxPlayer));
 
             SceneManager.LoadScene(defaultSceneIndex);
         }
