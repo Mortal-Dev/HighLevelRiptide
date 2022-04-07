@@ -143,10 +143,10 @@ namespace HLRiptide
         {
             if (Network == null || runOnFixedUpdate) return;
 
-            while (sumDeltaTime >= updateRate)
+            while (sumDeltaTime >= StepTime)
             {
                 Network.Tick();
-                sumDeltaTime -= updateRate;
+                sumDeltaTime -= StepTime;
             }
 
             sumDeltaTime += Time.deltaTime;
