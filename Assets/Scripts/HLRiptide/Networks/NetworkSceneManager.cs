@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using HLRiptide.NetworkedCommand;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 
 namespace HLRiptide.Networks
 {
@@ -41,6 +41,7 @@ namespace HLRiptide.Networks
             this.serverClientFinishedConnecting = serverClientFinishedConnecting;
 
             NetworkManager.Singleton.OnServerClientDisconnect += OnServerClientDisconnect;
+           // NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientConnect;
 
             if (NetworkManager.Singleton.IsClient) SceneManager.sceneLoaded += OnLocalClientSceneChange;
             else SceneManager.sceneLoaded += OnServerSceneChange;
@@ -79,10 +80,9 @@ namespace HLRiptide.Networks
                 serverClientFinishedConnecting?.Invoke(clientId);
             }
             
-
             serverClientFinishedLoadingSceneAction?.Invoke(clientId);
 
-            foreach (NetworkedObject.NetworkedObject networkedObject in NetworkManager.Singleton.NetworkedObjectContainer.ContainerDict.Values)
+            foreach (NetworkedObject networkedObject in NetworkManager.Singleton.NetworkedObjectContainer.ContainerDict.Values)
             {
                 InternalCommands.spawnObjectOnNetworkCommand.ExecuteCommandForClient(clientId, networkedObject.GetNetworkedObjectSpawnInfo());
             }
@@ -91,7 +91,7 @@ namespace HLRiptide.Networks
         public void OnServerClientConnect(ushort clientId)
         {
             syncClientSceneToServerScene.ExecuteCommandForClient(clientId, SceneManager.GetActiveScene().buildIndex);
-            Debug.Log("here");
+
             serverClientsLoadingScene.Add(clientId, true);
             serverClientHasLoadedDefaultScene.Add(clientId, false);
 

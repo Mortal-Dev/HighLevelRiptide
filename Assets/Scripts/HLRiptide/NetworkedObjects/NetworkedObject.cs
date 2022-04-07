@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HLRiptide.NetworkedObject
+namespace HLRiptide.NetworkedObjects
 {
     public class NetworkedObject : MonoBehaviour, IId
     {

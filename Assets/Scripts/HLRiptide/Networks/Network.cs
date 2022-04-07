@@ -1,5 +1,5 @@
 ﻿using HLRiptide.Util.MessageUtil;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 using RiptideNetworking;
 using System.Collections.Generic;
 using System;

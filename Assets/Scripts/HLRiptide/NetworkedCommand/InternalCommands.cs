@@ -1,4 +1,4 @@
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 using HLRiptide.Util.ContainerUtil;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -26,7 +26,7 @@ namespace HLRiptide.NetworkedCommand
 
             GameObject go = Object.Instantiate(NetworkManager.Singleton.networkedObjectPrefabs[networkedObjectInfo.objectPrefabIndex].gameObject);
 
-            NetworkedObject.NetworkedObject networkedObject = go.GetComponent<NetworkedObject.NetworkedObject>();
+            NetworkedObjects.NetworkedObject networkedObject = go.GetComponent<NetworkedObjects.NetworkedObject>();
 
             NetworkedBehaviour[] networkedBehaviours = go.GetComponents<NetworkedBehaviour>();
 

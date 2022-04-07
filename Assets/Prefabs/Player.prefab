@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkId: 0
   isLocalPlayer: 0
-  destroyObjectWhenClientDisconnect: 0
+  destroyObjectWhenClientDisconnect: 1
   hasSpawnedOnNetwork: 0
   networkWithAuthority: 0
 --- !u!33 &3990370002786168192

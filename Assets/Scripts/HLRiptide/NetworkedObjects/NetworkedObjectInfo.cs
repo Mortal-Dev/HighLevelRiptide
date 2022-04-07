@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RiptideNetworking;
 
-namespace HLRiptide.NetworkedObject
+namespace HLRiptide.NetworkedObjects
 {
     public class NetworkedObjectInfo
     {

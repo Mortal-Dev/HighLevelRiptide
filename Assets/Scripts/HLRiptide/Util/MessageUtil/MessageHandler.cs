@@ -1,5 +1,5 @@
 ﻿using HLRiptide.NetworkedCommand;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 using HLRiptide.Util.ContainerUtil;
 using RiptideNetworking;
 using System;
@@ -13,7 +13,7 @@ namespace HLRiptide.Util.MessageUtil
 {
     class MessageHandler
     {
-        public void HandleMessage(Container<NetworkedCommandBase> networkedCommandContainer, Container<NetworkedObject.NetworkedObject> networkedObjectContainer, Message message, ushort clientId)
+        public void HandleMessage(Container<NetworkedCommandBase> networkedCommandContainer, Container<NetworkedObjects.NetworkedObject> networkedObjectContainer, Message message, ushort clientId)
         {
             uint tick = message.GetUInt();
 
@@ -49,13 +49,13 @@ namespace HLRiptide.Util.MessageUtil
             }
         }
 
-        private void SetNetworkedObjectsFromMessage(Message message, Container<NetworkedObject.NetworkedObject> networkedObjectContainer)
+        private void SetNetworkedObjectsFromMessage(Message message, Container<NetworkedObject> networkedObjectContainer)
         {
             List<NetworkedObjectInfo> networkedObjectInfos = GetNetworkedObjectInfosFromMessage(message);
 
             foreach (NetworkedObjectInfo networkedObjectInfo in networkedObjectInfos)
             {
-                NetworkedObject.NetworkedObject networkedObject = networkedObjectContainer.GetValue(networkedObjectInfo.id);
+                NetworkedObjects.NetworkedObject networkedObject = networkedObjectContainer.GetValue(networkedObjectInfo.id);
 
                 if (networkedObject == null) continue;
 

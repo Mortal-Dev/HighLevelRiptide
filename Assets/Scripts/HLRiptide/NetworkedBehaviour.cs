@@ -10,7 +10,7 @@ namespace HLRiptide
 {
     public abstract class NetworkedBehaviour : MonoBehaviour, IId
     {
-        private NetworkedObject.NetworkedObject networkedObject;
+        private NetworkedObjects.NetworkedObject networkedObject;
 
         public bool IsLocalPlayer => networkedObject.IsLocalPlayer;
 
@@ -70,7 +70,7 @@ namespace HLRiptide
             NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientFinishConnecting;
             NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientStartConnecting;
 
-            if (transform.root.gameObject.TryGetComponent(out NetworkedObject.NetworkedObject networkedObject))
+            if (transform.root.gameObject.TryGetComponent(out NetworkedObjects.NetworkedObject networkedObject))
             {
                 this.networkedObject = networkedObject;
             }

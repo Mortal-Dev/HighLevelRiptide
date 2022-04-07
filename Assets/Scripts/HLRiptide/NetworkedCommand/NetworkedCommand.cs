@@ -16,7 +16,7 @@ namespace HLRiptide.NetworkedCommand
         internal readonly Action<Message, T> addCommandArgToMessage;
         internal readonly Func<Message, T> getCommandArgFromMessage;
 
-        public NetworkedCommand(NetworkPermission networkWithAuthority, Action<T> networkedCommand, Action<Message, T> addCommandArgToMessage = null, 
+        public NetworkedCommand(NetworkPermission networkWithAuthority, Action<T> networkedCommand, Action<Message, T> addCommandArgToMessage = null,
             Func<Message, T> getCommandArgFromMessage = null) : base(networkWithAuthority, NetworkedCommandPriority.Low)
         {
             NetworkManager.Singleton.OnLocalClientConnect += OnLocalClientConnect;
@@ -40,17 +40,17 @@ namespace HLRiptide.NetworkedCommand
             NetworkManager.Singleton.OnLocalClientConnect -= OnLocalClientConnect;
         }
 
-        public override void ExecuteCommandOnNetwork(object arg) 
+        public override void ExecuteCommandOnNetwork(object arg)
         {
             if (!NetworkPermissionMatches()) ThrowNetworkPermissionExcpetion();
 
             bufferedCommandArgs.Add(arg);
         }
 
-        public void ExecuteCommandForClient(ushort id, T arg) 
+        public void ExecuteCommandForClient(ushort id, T arg)
         {
             if (NetworkManager.Singleton.IsClient || networkWithAuthority == NetworkPermission.Client) ThrowNetworkPermissionExcpetion();
-            
+
             if (bufferedCommandArgsPerClient.TryGetValue(id, out List<object> value))
             {
                 value.Add(arg);
@@ -65,28 +65,27 @@ namespace HLRiptide.NetworkedCommand
 
         internal override void AddClientCommandArgsToMessage(ushort clientId, Message message)
         {
-            AddIdToMessage(message);
-
             if (bufferedCommandArgsPerClient.TryGetValue(clientId, out List<object> commandArgs))
             {
+                if (commandArgs.Count == 0) return;
+
+                AddIdToMessage(message);
+
                 message.Add(commandArgs.Count);
 
                 foreach (object commandArg in commandArgs)
                 {
                     addCommandArgToMessage.Invoke(message, (T)commandArg);
                 }
-                
+
                 commandArgs.Clear();
-            }
-            else
-            {
-                //zero meant to represent that there's no commands
-                message.Add(0);
             }
         }
 
         internal override void AddCommandArgsToMessage(Message message)
         {
+            if (bufferedCommandArgs.Count == 0) return;
+
             AddIdToMessage(message);
 
             message.Add(bufferedCommandArgs.Count);
@@ -98,7 +97,7 @@ namespace HLRiptide.NetworkedCommand
 
             bufferedCommandArgs.Clear();
         }
-        
+
         internal override void ExecuteCommand(Message message)
         {
             T arg = getCommandArgFromMessage.Invoke(message);
@@ -111,7 +110,7 @@ namespace HLRiptide.NetworkedCommand
             throw new Exception($"Attempted to execute command on network without having proper permission");
         }
 
-        private void AddIdToMessage(Message message) 
+        private void AddIdToMessage(Message message)
         {
             IId iid = this;
             message.Add(iid.Id);

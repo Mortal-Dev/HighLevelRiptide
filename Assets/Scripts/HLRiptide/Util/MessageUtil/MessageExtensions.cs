@@ -1,5 +1,5 @@
 using RiptideNetworking;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 using UnityEngine;
 
 namespace HLRiptide.Util.MessageUtil

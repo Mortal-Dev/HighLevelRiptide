@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using HLRiptide;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 
 public class ServerSpawnController : NetworkedBehaviour
 {
@@ -23,7 +23,7 @@ public class ServerSpawnController : NetworkedBehaviour
     {
         GameObject go = Instantiate(playerGameObject);
 
-        SetPlayerSpawn(go, new System.Random().Next(0, spawnPositons.Length));
+        //SetPlayerSpawn(go, 0);
 
         go.GetComponent<NetworkedObject>().SpawnOnNetwork(id);
     }

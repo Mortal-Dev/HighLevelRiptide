@@ -81,7 +81,7 @@ namespace HLRiptide.Networks
         private void SendIndividualClientMessage(ushort clientId)
         {
             //don't send messages to client's loading a scene
-            if (networkSceneManager.IsClientLoadingScene(clientId)) return;
+           // if (networkSceneManager.IsClientLoadingScene(clientId)) return;
 
             Server.Send(messageGenerator.GenerateMessageForServerClient(NetworkTick, clientId), clientId);
         }

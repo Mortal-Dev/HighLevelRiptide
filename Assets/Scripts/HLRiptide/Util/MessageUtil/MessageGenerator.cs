@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HLRiptide.Networks;
 using UnityEngine;
+using HLRiptide.NetworkedObjects;
 
 namespace HLRiptide.Util.MessageUtil
 {
@@ -43,7 +44,7 @@ namespace HLRiptide.Util.MessageUtil
 
         private void AddCommandsToMessage(Message message)
         {
-            (List<NetworkedCommandBase> lowPriorityCommands, List<NetworkedCommandBase> mediumPriorityCommands, List<NetworkedCommandBase> highPriorityCommands) = GetNetworkedCommandsByPriority(NetworkManager.Singleton.NetworkedCommandContainer);
+            (List<NetworkedCommandBase> lowPriorityCommands, List<NetworkedCommandBase> mediumPriorityCommands, List<NetworkedCommandBase> highPriorityCommands) = GetNetworkedCommandsByPriority(NetworkManager.Singleton.NetworkedCommandContainer, ushort.MaxValue);
 
             message.Add(lowPriorityCommands.Count + mediumPriorityCommands.Count + highPriorityCommands.Count);
 
@@ -54,7 +55,7 @@ namespace HLRiptide.Util.MessageUtil
 
         private void AddClientCommandsToMessage(Message message, ushort clientId)
         {
-            (List<NetworkedCommandBase> lowPriorityCommands, List<NetworkedCommandBase> mediumPriorityCommands, List<NetworkedCommandBase> highPriorityCommands) = GetNetworkedCommandsByPriority(NetworkManager.Singleton.NetworkedCommandContainer);
+            (List<NetworkedCommandBase> lowPriorityCommands, List<NetworkedCommandBase> mediumPriorityCommands, List<NetworkedCommandBase> highPriorityCommands) = GetNetworkedCommandsByPriority(NetworkManager.Singleton.NetworkedCommandContainer, clientId);
 
             message.Add(lowPriorityCommands.Count + mediumPriorityCommands.Count + highPriorityCommands.Count);
 
@@ -67,51 +68,72 @@ namespace HLRiptide.Util.MessageUtil
         {
             foreach (NetworkedCommandBase networkedCommandBase in networkedCommandBases)
             {
+                IId id = networkedCommandBase;
+
+                if (id.Id == (uint)InternalCommandId.SyncClientToServerScene && NetworkManager.Singleton.Network.networkSceneManager.IsClientLoadingScene(clientId))
+                {
+                    AddCommandToMessage(message, networkedCommandBase, clientId);
+                    return;
+                }
+
                 AddCommandToMessage(message, networkedCommandBase, clientId);
             }
         }
 
-        private void AddCommandToMessage(Message message, NetworkedCommandBase networkedCommandBase, ushort clientId)
+        private bool AddCommandToMessage(Message message, NetworkedCommandBase networkedCommandBase, ushort clientId)
         {
             if (PermissionMatches(networkedCommandBase))
             {
                 if (clientId == ushort.MaxValue)
                 {
                     networkedCommandBase.AddCommandArgsToMessage(message);
+
+                    return true;
                 }
                 else
                 {
                     networkedCommandBase.AddClientCommandArgsToMessage(clientId, message);
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private void AddNetworkedObjectInfosToMessage(Message message)
         {
-            List<NetworkedObject.NetworkedObject> networkedObjects = GetNetworkedObjectsWithChangedPositions();
+            List<NetworkedObject> networkedObjects = GetNetworkedObjectsWithChangedPositions();
 
             message.Add(networkedObjects.Count);
 
-            foreach (NetworkedObject.NetworkedObject networkedObject in networkedObjects)
+            foreach (NetworkedObject networkedObject in networkedObjects)
             {
                 message.Add(networkedObject.GetNetworkedObjectInfo());
             }
         }
 
-        private (List<NetworkedCommandBase>, List<NetworkedCommandBase>, List<NetworkedCommandBase>) GetNetworkedCommandsByPriority(Container<NetworkedCommandBase> networkedCommandContainer)
+        private (List<NetworkedCommandBase>, List<NetworkedCommandBase>, List<NetworkedCommandBase>) GetNetworkedCommandsByPriority(Container<NetworkedCommandBase> networkedCommandContainer, ushort clientId)
         {
-            return (GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.Low), GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.Medium), GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.High));
+            return (GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.Low, clientId), GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.Medium, clientId), GetNetworkedCommandBasesWithPriority(networkedCommandContainer, NetworkedCommandPriority.High, clientId));
         }
 
-        private List<NetworkedCommandBase> GetNetworkedCommandBasesWithPriority(Container<NetworkedCommandBase> networkedCommandContainer, NetworkedCommandPriority networkedCommandPriority)
+        private List<NetworkedCommandBase> GetNetworkedCommandBasesWithPriority(Container<NetworkedCommandBase> networkedCommandContainer, NetworkedCommandPriority networkedCommandPriority, ushort clientId)
         {
             List<NetworkedCommandBase> networkedCommandBases = new List<NetworkedCommandBase>();
 
             foreach (NetworkedCommandBase networkedCommand in networkedCommandContainer.ContainerDict.Values)
             {
-                if (networkedCommand.networkedCommandPriority == networkedCommandPriority && PermissionMatches(networkedCommand) && networkedCommand.bufferedCommandArgs.Count > 0 || networkedCommand.bufferedCommandArgsPerClient.Count > 0)
+                if (networkedCommand.networkedCommandPriority == networkedCommandPriority && PermissionMatches(networkedCommand))
                 {
-                    networkedCommandBases.Add(networkedCommand);
+                    if (networkedCommand.bufferedCommandArgs.Count > 0 && clientId == ushort.MaxValue) 
+                    {
+                        networkedCommandBases.Add(networkedCommand);
+                    }
+                    else if (networkedCommand.bufferedCommandArgsPerClient.Count > 0 && clientId != ushort.MaxValue)
+                    {
+                        networkedCommandBases.Add(networkedCommand);
+                    }
                 }
             }
 
@@ -123,13 +145,13 @@ namespace HLRiptide.Util.MessageUtil
             return (NetworkManager.Singleton.IsClient && networkedCommandBase.networkWithAuthority == NetworkPermission.Client || NetworkManager.Singleton.IsServer && networkedCommandBase.networkWithAuthority == NetworkPermission.Server);
         }
 
-        private List<NetworkedObject.NetworkedObject> GetNetworkedObjectsWithChangedPositions()
+        private List<NetworkedObject> GetNetworkedObjectsWithChangedPositions()
         {
-            List <NetworkedObject.NetworkedObject> networkedObjects = NetworkManager.Singleton.NetworkedObjectContainer.ContainerDict.Values.ToList();
+            List <NetworkedObject> networkedObjects = NetworkManager.Singleton.NetworkedObjectContainer.ContainerDict.Values.ToList();
 
             for (int i = networkedObjects.Count - 1; i >= 0; i--)
             {
-                NetworkedObject.NetworkedObject networkedObject = networkedObjects[i];
+                NetworkedObject networkedObject = networkedObjects[i];
 
                 if (networkedObject.pastPosition.Equals(networkedObject.transform.position) && networkedObject.pastRotation.Equals(networkedObject.transform.rotation.eulerAngles) && networkedObject.pastScale.Equals(networkedObject.transform.localScale))
                 {

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2020.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\Multiplayer\Spawns\Spawn.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\SerializeUtil\PrimativeSerializers.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalCommands.cs" />
@@ -74,12 +71,12 @@
     <Compile Include="Assets\Scripts\HLRiptide\Util\ContainerUtil\Container.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Spawns\ServerSpawnController.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageGenerator.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObject\NetworkedObjectInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkPermission.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\ClientNetwork.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\ContainerUtil\Iid.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\NetworkedCommand.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObject\NetworkedObject.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObject.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\NetworkedCommandPriority.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\IState.cs" />
@@ -91,7 +88,7 @@
     <Compile Include="Assets\Scripts\HLRiptide\Networks\INetworkStartInfo.cs" />
     <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\NetworkedCommandBase.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObject\NetworkedObjectSpawnInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectSpawnInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageBuffer.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\Network.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\LocalPlayerInputInfo.cs" />
@@ -702,11 +699,11 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="RiptideNetworking">
       <HintPath>Library\ScriptAssemblies\RiptideNetworking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

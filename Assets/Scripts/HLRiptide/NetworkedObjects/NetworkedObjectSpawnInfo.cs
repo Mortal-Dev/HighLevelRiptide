@@ -4,7 +4,7 @@ using HLRiptide.Util.MessageUtil;
 using Unity.Collections;
 using UnityEngine;
 
-namespace HLRiptide.NetworkedObject
+namespace HLRiptide.NetworkedObjects
 {
     public class NetworkedObjectSpawnInfo
     {

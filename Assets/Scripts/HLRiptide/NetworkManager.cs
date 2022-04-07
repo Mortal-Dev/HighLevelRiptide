@@ -1,5 +1,5 @@
 using HLRiptide.NetworkedCommand;
-using HLRiptide.NetworkedObject;
+using HLRiptide.NetworkedObjects;
 using HLRiptide.Networks;
 using HLRiptide.Util.ContainerUtil;
 using HLRiptide.Util.MessageUtil;
@@ -58,7 +58,7 @@ namespace HLRiptide
         public delegate void OnTickAction();
         public event OnTickAction OnTick;
 
-        internal Container<NetworkedObject.NetworkedObject> NetworkedObjectContainer { get; private set; }
+        internal Container<NetworkedObjects.NetworkedObject> NetworkedObjectContainer { get; private set; }
 
         internal Container<NetworkedCommandBase> NetworkedCommandContainer { get; private set; }
 
@@ -66,7 +66,7 @@ namespace HLRiptide
 
         //unity inspector fields
         [Header("Prefabs that can be used across the network")]
-        [SerializeField] internal NetworkedObject.NetworkedObject[] networkedObjectPrefabs;
+        [SerializeField] internal NetworkedObjects.NetworkedObject[] networkedObjectPrefabs;
 
         [Header("Network Settings")]
         [SerializeField] private bool runOnFixedUpdate;
@@ -89,7 +89,7 @@ namespace HLRiptide
                 return;
             }
 
-            NetworkedObjectContainer = new Container<NetworkedObject.NetworkedObject>();
+            NetworkedObjectContainer = new Container<NetworkedObjects.NetworkedObject>();
             NetworkedCommandContainer = new Container<NetworkedCommandBase>();
 
             InternalCommands.Init();
