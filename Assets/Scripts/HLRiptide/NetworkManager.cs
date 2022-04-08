@@ -66,7 +66,7 @@ namespace HLRiptide
 
         //unity inspector fields
         [Header("Prefabs that can be used across the network")]
-        [SerializeField] internal NetworkedObjects.NetworkedObject[] networkedObjectPrefabs;
+        [SerializeField] internal NetworkedObject[] networkedObjectPrefabs;
 
         [Header("Network Settings")]
         [SerializeField] private bool runOnFixedUpdate;
@@ -89,7 +89,7 @@ namespace HLRiptide
                 return;
             }
 
-            NetworkedObjectContainer = new Container<NetworkedObjects.NetworkedObject>();
+            NetworkedObjectContainer = new Container<NetworkedObject>();
             NetworkedCommandContainer = new Container<NetworkedCommandBase>();
 
             InternalCommands.Init();
