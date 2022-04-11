@@ -58,7 +58,7 @@ namespace HLRiptide
         public delegate void OnTickAction();
         public event OnTickAction OnTick;
 
-        internal Container<NetworkedObjects.NetworkedObject> NetworkedObjectContainer { get; private set; }
+        internal Container<NetworkedObject> NetworkedObjectContainer { get; private set; }
 
         internal Container<NetworkedCommandBase> NetworkedCommandContainer { get; private set; }
 

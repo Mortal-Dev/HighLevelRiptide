@@ -68,37 +68,23 @@ namespace HLRiptide.Util.MessageUtil
         {
             foreach (NetworkedCommandBase networkedCommandBase in networkedCommandBases)
             {
-                IId id = networkedCommandBase;
-
-                if (id.Id == (uint)InternalCommandId.SyncClientToServerScene && NetworkManager.Singleton.Network.networkSceneManager.IsClientLoadingScene(clientId))
-                {
-                    AddCommandToMessage(message, networkedCommandBase, clientId);
-                    return;
-                }
-
                 AddCommandToMessage(message, networkedCommandBase, clientId);
             }
         }
 
-        private bool AddCommandToMessage(Message message, NetworkedCommandBase networkedCommandBase, ushort clientId)
+        private void AddCommandToMessage(Message message, NetworkedCommandBase networkedCommandBase, ushort clientId)
         {
             if (PermissionMatches(networkedCommandBase))
             {
                 if (clientId == ushort.MaxValue)
                 {
                     networkedCommandBase.AddCommandArgsToMessage(message);
-
-                    return true;
                 }
                 else
                 {
                     networkedCommandBase.AddClientCommandArgsToMessage(clientId, message);
-
-                    return true;
                 }
             }
-
-            return false;
         }
 
         private void AddNetworkedObjectInfosToMessage(Message message)
@@ -130,7 +116,7 @@ namespace HLRiptide.Util.MessageUtil
                     {
                         networkedCommandBases.Add(networkedCommand);
                     }
-                    else if (networkedCommand.bufferedCommandArgsPerClient.Count > 0 && clientId != ushort.MaxValue)
+                    else if (networkedCommand.bufferedCommandArgsPerClient.TryGetValue(clientId, out List<object> list) && list.Count > 0 && clientId != ushort.MaxValue)
                     {
                         networkedCommandBases.Add(networkedCommand);
                     }

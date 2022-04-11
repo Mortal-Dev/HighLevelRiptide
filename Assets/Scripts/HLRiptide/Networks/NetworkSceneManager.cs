@@ -23,22 +23,22 @@ namespace HLRiptide.Networks
         private readonly Action<ushort> serverClientFinishedLoadingSceneAction;
         private readonly Action<ushort> serverClientBeginLoadingSceneAction;
 
-        private readonly Action<ushort> serverClientFinishedConnecting;
+        private readonly Action<ushort> serverClientFinishedConnectingAction;
 
         private readonly Action<AsyncOperation> localClientBeginLoadingSceneAction;
         private readonly Action<ushort> localClientFinishedLoadingSceneAction;
 
         private bool hasLoadedDefualtSceneOnce = false;
 
-        public NetworkSceneManager(Action onServerStart, Action<ushort> serverClientStartConnecting, Action<ushort> serverClientFinishedConnecting, Action<ushort> serverClientBeginLoadingSceneAction, Action<ushort> serverClientFinishedLoadingSceneAction, Action<AsyncOperation> localClientBeginLoadingSceneAction, Action<ushort> localClientFinishedLoadingSceneAction)
+        public NetworkSceneManager(Action onServerStart, Action<ushort> serverClientFinishedConnecting, Action<ushort> serverClientBeginLoadingScene, Action<ushort> serverClientFinishedLoadingScene, Action<AsyncOperation> localClientBeginLoadingScene, Action<ushort> localClientFinishedLoadingScene)
         {
             this.onServerStart = onServerStart;
 
-            this.serverClientBeginLoadingSceneAction = serverClientBeginLoadingSceneAction;
-            this.serverClientFinishedLoadingSceneAction = serverClientFinishedLoadingSceneAction;
-            this.localClientBeginLoadingSceneAction = localClientBeginLoadingSceneAction;
-            this.localClientFinishedLoadingSceneAction = localClientFinishedLoadingSceneAction;
-            this.serverClientFinishedConnecting = serverClientFinishedConnecting;
+            serverClientBeginLoadingSceneAction = serverClientBeginLoadingScene;
+            serverClientFinishedLoadingSceneAction = serverClientFinishedLoadingScene;
+            localClientBeginLoadingSceneAction = localClientBeginLoadingScene;
+            localClientFinishedLoadingSceneAction = localClientFinishedLoadingScene;
+            serverClientFinishedConnectingAction = serverClientFinishedConnecting;
 
             NetworkManager.Singleton.OnServerClientDisconnect += OnServerClientDisconnect;
            // NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientConnect;
@@ -53,7 +53,9 @@ namespace HLRiptide.Networks
             serverClientHasLoadedDefaultScene = new Dictionary<ushort, bool>();
         }
 
-        public bool IsClientLoadingScene(ushort id)
+        public bool IsLocalClientLoadingScene { get; private set; }
+
+        public bool IsServerClientLoadingScene(ushort id)
         {
             if (serverClientsLoadingScene.TryGetValue(id, out bool value))
             {
@@ -65,6 +67,8 @@ namespace HLRiptide.Networks
 
         private void ClientSyncSceneToServer(int buildIndex)
         {
+            IsLocalClientLoadingScene = true;
+
             AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(buildIndex);
 
             localClientBeginLoadingSceneAction?.Invoke(asyncOperation);
@@ -77,7 +81,7 @@ namespace HLRiptide.Networks
             if (SceneManager.GetActiveScene().buildIndex == NetworkManager.Singleton.defaultSceneIndex && !serverClientHasLoadedDefaultScene[clientId])
             {
                 serverClientHasLoadedDefaultScene[clientId] = true;
-                serverClientFinishedConnecting?.Invoke(clientId);
+                serverClientFinishedConnectingAction?.Invoke(clientId);
             }
             
             serverClientFinishedLoadingSceneAction?.Invoke(clientId);
@@ -107,6 +111,8 @@ namespace HLRiptide.Networks
         private void OnLocalClientSceneChange(Scene scene, LoadSceneMode loadSceneMode)
         {
             AwakeNetworkedBehaviours();
+
+            IsLocalClientLoadingScene = false;
 
             clientFinishedLoadingSceneCommand.ExecuteCommandOnNetwork(NetworkManager.Singleton.NetworkId);
 

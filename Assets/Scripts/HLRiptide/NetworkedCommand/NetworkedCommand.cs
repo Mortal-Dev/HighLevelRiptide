@@ -44,12 +44,16 @@ namespace HLRiptide.NetworkedCommand
         {
             if (!NetworkPermissionMatches()) ThrowNetworkPermissionExcpetion();
 
+            
+
             bufferedCommandArgs.Add(arg);
         }
 
         public void ExecuteCommandForClient(ushort id, T arg)
         {
             if (NetworkManager.Singleton.IsClient || networkWithAuthority == NetworkPermission.Client) ThrowNetworkPermissionExcpetion();
+
+            if (NetworkManager.Singleton.IsServer && NetworkManager.Singleton.Network.networkSceneManager.IsServerClientLoadingScene(id)) return;
 
             if (bufferedCommandArgsPerClient.TryGetValue(id, out List<object> value))
             {

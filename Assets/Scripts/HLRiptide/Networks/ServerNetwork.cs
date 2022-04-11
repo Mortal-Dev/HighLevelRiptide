@@ -14,6 +14,8 @@ namespace HLRiptide.Networks
 {
     public class ServerNetwork : Network
     {
+        internal const ushort SERVER_NETWORK_ID = ushort.MaxValue;
+
         internal readonly Server Server;
 
         Action OnTick;
@@ -37,7 +39,7 @@ namespace HLRiptide.Networks
 
             Server.Start(serverNetworkStartInfo.Port, serverNetworkStartInfo.MaxPlayerCount);
 
-            networkSceneManager = new NetworkSceneManager(serverNetworkStartInfo.OnServerStart, serverNetworkStartInfo.OnServerClientBeginConnecting, serverNetworkStartInfo.OnServerClientFinishedConnecting, serverNetworkStartInfo.OnServerClientBeginLoadScene, serverNetworkStartInfo.OnServerClientFinishLoadScene, null, null);
+            networkSceneManager = new NetworkSceneManager(serverNetworkStartInfo.OnServerStart, serverNetworkStartInfo.OnServerClientFinishedConnecting, serverNetworkStartInfo.OnServerClientBeginLoadScene, serverNetworkStartInfo.OnServerClientFinishLoadScene, null, null);
 
             NetworkManager.Singleton.NetworkId = ushort.MaxValue;
         }
@@ -80,9 +82,6 @@ namespace HLRiptide.Networks
 
         private void SendIndividualClientMessage(ushort clientId)
         {
-            //don't send messages to client's loading a scene
-           // if (networkSceneManager.IsClientLoadingScene(clientId)) return;
-
             Server.Send(messageGenerator.GenerateMessageForServerClient(NetworkTick, clientId), clientId);
         }
 

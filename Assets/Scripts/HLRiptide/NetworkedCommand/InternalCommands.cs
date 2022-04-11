@@ -22,11 +22,12 @@ namespace HLRiptide.NetworkedCommand
 
         internal static void SpawnObjectOnClient(NetworkedObjectSpawnInfo networkedObjectInfo)
         {
+            //object has already spawned, don't respawn it
             if (NetworkManager.Singleton.NetworkedObjectContainer.GetValue(networkedObjectInfo.objectInfo.id) != null) return;
 
             GameObject go = Object.Instantiate(NetworkManager.Singleton.networkedObjectPrefabs[networkedObjectInfo.objectPrefabIndex].gameObject);
 
-            NetworkedObjects.NetworkedObject networkedObject = go.GetComponent<NetworkedObjects.NetworkedObject>();
+            NetworkedObject networkedObject = go.GetComponent<NetworkedObject>();
 
             NetworkedBehaviour[] networkedBehaviours = go.GetComponents<NetworkedBehaviour>();
 
