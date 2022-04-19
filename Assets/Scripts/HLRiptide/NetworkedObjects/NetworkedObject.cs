@@ -95,6 +95,10 @@ namespace HLRiptide.NetworkedObjects
 
             if (NetworkManager.Singleton.IsClient) throw new Exception("Cannot spawn objects on Client!");
 
+            DestroyRigidbody();
+
+            if (clientIdWithAuthority != ushort.MaxValue) DestroyColliders();
+
             InitProperties(clientIdWithAuthority);
 
             NetworkManager.Singleton.NetworkedObjectContainer.RegisterValue(this);
@@ -133,8 +137,16 @@ namespace HLRiptide.NetworkedObjects
         {
             transform.localScale = networkedObjectInfo.scale;
 
-            StartCoroutine(LerpPosition(networkedObjectInfo.position, Time.fixedDeltaTime));
-            StartCoroutine(LerpRotation(networkedObjectInfo.rotation, Time.fixedDeltaTime));
+            if (NetworkManager.Singleton.IsClient)
+            {
+                StartCoroutine(LerpPosition(networkedObjectInfo.position, Time.fixedDeltaTime));
+                StartCoroutine(LerpRotation(networkedObjectInfo.rotation, Time.fixedDeltaTime));
+            }
+            else
+            {
+                transform.position = networkedObjectInfo.position;
+                transform.rotation = Quaternion.Euler(networkedObjectInfo.rotation.x, networkedObjectInfo.rotation.y, networkedObjectInfo.rotation.z);
+            }
         }
 
         internal NetworkedObjectInfo GetNetworkedObjectInfo()
@@ -154,6 +166,31 @@ namespace HLRiptide.NetworkedObjects
             networkedObjectSpawnInfo.overrideIds = commandIds;
 
             return networkedObjectSpawnInfo;
+        }
+
+        private void DestroyColliders()
+        { 
+
+            if (TryGetComponent(out Collider baseCollider))
+            {
+                Destroy(baseCollider);
+            }
+
+            Collider[] colliders = GetComponentsInChildren<Collider>();
+
+            foreach (Collider collider in colliders) Destroy(collider);
+        }
+
+        private void DestroyRigidbody()
+        {
+            if (TryGetComponent(out Rigidbody baseRigidBody))
+            {
+                Destroy(baseRigidBody);
+            }
+
+            Rigidbody[] rigidbodys = GetComponentsInChildren<Rigidbody>();
+
+            foreach (Rigidbody rigidbody in rigidbodys) Destroy(rigidbody);
         }
 
         private void SendDestroyCommand()
@@ -213,7 +250,7 @@ namespace HLRiptide.NetworkedObjects
             throw new Exception($"could not find {gameObject.name} in networked object prefabs. Make sure {gameObject.name} has the NetworkedObject component attached to its root Game Object");
         }
 
-        IEnumerator LerpPosition(Vector3 newPosition, float duration)
+        private IEnumerator LerpPosition(Vector3 newPosition, float duration)
         {
             float time = 0;
             Vector3 startPosition = transform.position;

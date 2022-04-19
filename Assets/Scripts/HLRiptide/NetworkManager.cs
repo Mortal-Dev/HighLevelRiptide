@@ -14,6 +14,8 @@ namespace HLRiptide
 {
     public class NetworkManager : MonoBehaviour
     {
+        public const ushort SERVER_NETWORK_ID = ushort.MaxValue;
+
         public static NetworkManager Singleton { get; private set; }
 
         public bool IsClient { get; private set; }

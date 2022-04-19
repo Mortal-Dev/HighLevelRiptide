@@ -43,7 +43,7 @@ namespace HLRiptide
             NetworkManager.Singleton.OnServerStart -= OnServerStart;
             NetworkManager.Singleton.OnServerClientBeginLoadScene -= OnServerClientStartLoadScene;
             NetworkManager.Singleton.OnServerClientFinishLoadScene -= OnServerClientFinishedLoadScene;
-            NetworkManager.Singleton.OnServerClientBeginConnected -= OnServerClientFinishConnecting;
+            NetworkManager.Singleton.OnServerClientFinishConnected -= OnServerClientFinishConnecting;
             NetworkManager.Singleton.OnServerClientBeginConnected -= OnServerClientStartConnecting;
         }
 
@@ -67,13 +67,12 @@ namespace HLRiptide
             NetworkManager.Singleton.OnServerStart += OnServerStart;
             NetworkManager.Singleton.OnServerClientBeginLoadScene += OnServerClientStartLoadScene;
             NetworkManager.Singleton.OnServerClientFinishLoadScene += OnServerClientFinishedLoadScene;
-            NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientFinishConnecting;
             NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientStartConnecting;
+            NetworkManager.Singleton.OnServerClientFinishConnected += OnServerClientFinishConnecting;
 
             if (transform.root.gameObject.TryGetComponent(out NetworkedObjects.NetworkedObject networkedObject))
-            {
                 this.networkedObject = networkedObject;
-            }
+            
 
             OnRegisterCommands();
 
@@ -82,8 +81,6 @@ namespace HLRiptide
 
         private void Start()
         {
-            if (networkedObject != null && NetworkId != NetworkManager.Singleton.NetworkId) DestroyRigidbody();
-
             OnStart();
         }
 
@@ -178,13 +175,7 @@ namespace HLRiptide
             networkedCommands.Clear();
         }
 
-        private void DestroyRigidbody()
-        {
-            if (TryGetComponent(out Rigidbody rigidBody))
-            {
-                Destroy(rigidBody);
-            }
-        }
+        
 
         private void ThrowNoNetworkedObjectException() => throw new Exception($"Error no networked object on base of Game Object");
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HLRiptide.NetworkedCommand
 {
@@ -30,7 +31,10 @@ namespace HLRiptide.NetworkedCommand
             bufferedCommandArgs = new List<object>();
             bufferedCommandArgsPerClient = new Dictionary<ushort, List<object>>();
 
-            if (networkWithAuthority == NetworkPermission.Server) clientIdWithAuthority = ushort.MaxValue;
+            if (networkWithAuthority == NetworkPermission.Server)
+            {
+                clientIdWithAuthority = ushort.MaxValue;
+            }
 
             NetworkManager.Singleton.NetworkedCommandContainer.RegisterValue(this);
         }

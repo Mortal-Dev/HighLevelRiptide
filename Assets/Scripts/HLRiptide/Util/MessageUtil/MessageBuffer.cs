@@ -1,15 +1,17 @@
 ﻿using RiptideNetworking;
+using RiptideNetworking.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HLRiptide.Util.MessageUtil
 {
     class MessageBuffer
     {
-        private readonly List<Message> messageBuffer;
+        private readonly Dictionary<uint, Message> tickMessageBuffer;
 
         private readonly int maxMessageBufferSize;
 
@@ -17,26 +19,42 @@ namespace HLRiptide.Util.MessageUtil
         {
             this.maxMessageBufferSize = maxMessageBufferSize;
 
-            messageBuffer = new List<Message>();
+            tickMessageBuffer = new Dictionary<uint, Message>();
         }
 
         public void AddMessageToBuffer(Message message)
         {
-            messageBuffer.Add(message);
+            uint tick = message.GetUInt();
+
+            tickMessageBuffer.Add(tick, message);
         }
 
-        public Message PopMessageFromBuffer()
+        public (uint, Message) PopMessageFromBuffer()
         {
-            Message message = null;
-
-            if (messageBuffer.Count >= maxMessageBufferSize)
+            if (tickMessageBuffer.Count >= maxMessageBufferSize)
             {
-                message = messageBuffer[0];
-
-                messageBuffer.RemoveAt(0);
+                Debug.Log("here");
+                return GetMessageWithLowestTickFromBuffer();
             }
 
-            return message;
+            return (0, null);
+        }
+
+        private (uint, Message) GetMessageWithLowestTickFromBuffer(bool removeMessageFromBufferIfFound = true)
+        {
+            KeyValuePair<uint, Message> tickMessagePairReturn;
+
+            foreach (KeyValuePair<uint, Message> tickMessagePair in tickMessageBuffer)
+            {
+                if (tickMessagePairReturn.Key > tickMessagePair.Key)
+                {
+                    tickMessagePairReturn = tickMessagePair;
+                }
+            }
+
+            if (removeMessageFromBufferIfFound) tickMessageBuffer.Remove(tickMessagePairReturn.Key);
+
+            return (tickMessagePairReturn.Key, tickMessagePairReturn.Value);
         }
     }
 }

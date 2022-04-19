@@ -116,7 +116,7 @@ namespace HLRiptide.Util.MessageUtil
                     {
                         networkedCommandBases.Add(networkedCommand);
                     }
-                    else if (networkedCommand.bufferedCommandArgsPerClient.TryGetValue(clientId, out List<object> list) && list.Count > 0 && clientId != ushort.MaxValue)
+                    else if (networkedCommand.bufferedCommandArgsPerClient.TryGetValue(clientId, out List<object> list) && list.Count > 0)
                     {
                         networkedCommandBases.Add(networkedCommand);
                     }

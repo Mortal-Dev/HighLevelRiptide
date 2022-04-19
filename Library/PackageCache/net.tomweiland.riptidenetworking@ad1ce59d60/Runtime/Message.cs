@@ -33,7 +33,7 @@ namespace RiptideNetworking
             set
             {
                 if (hasMessageClassBeenCreated)
-                    return;
+                    throw new Exception("Cannot set MaxMessageSize after a Message instance has been created");
 
                 maxMessageSize = value;
             }
@@ -44,9 +44,28 @@ namespace RiptideNetworking
         /// <summary>The default maximum amount of bytes that a message can contain. Includes a 1 byte header.</summary>>\
         public const int DefaultMaxMessageSize = 1250;
 
+        private static bool shouldPoolMessage = false;
+
+        /// <summary>
+        /// Whether Message's should be pooled, doing so would make storing sent/recieved message impossible, but could potentially increase efficiancy
+        /// </summary>
+        public static bool ShouldPoolMessages
+        {
+            get
+            {
+                return shouldPoolMessage;
+            }
+            set
+            {
+                if (hasMessageClassBeenCreated)
+                    throw new Exception("Cannot set ShouldPoolMessage after a Message instance has been created");
+            }
+        }
+
         /// <summary>How many messages to add to the pool for each <see cref="Server"/> or <see cref="Client"/> instance that is started.</summary>
         /// <remarks>Changes will not affect <see cref="Server"/> and <see cref="Client"/> instances which are already running until they are restarted.</remarks>
         public static byte InstancesPerSocket { get; set; } = 4;
+
         /// <summary>A pool of reusable message instances.</summary>
         private static readonly List<Message> pool = new List<Message>();
 
@@ -84,6 +103,8 @@ namespace RiptideNetworking
         /// <summary>Increases the amount of messages in the pool. For use when a new <see cref="Server"/> or <see cref="Client"/> is started.</summary>
         internal static void IncreasePoolCount()
         {
+            if (!shouldPoolMessage) return;
+
             lock (pool)
             {
                 pool.Capacity += InstancesPerSocket * 2; // x2 so there's room for extra Message instance in the event that more are needed
@@ -96,6 +117,8 @@ namespace RiptideNetworking
         /// <summary>Decreases the amount of messages in the pool. For use when a <see cref="Server"/> or <see cref="Client"/> is stopped.</summary>
         internal static void DecreasePoolCount()
         {
+            if (!shouldPoolMessage) return;
+
             lock (pool)
             {
                 if (pool.Count < InstancesPerSocket)
@@ -149,6 +172,8 @@ namespace RiptideNetworking
         /// <returns>A message instance ready to be used for sending or handling.</returns>
         private static Message RetrieveFromPool()
         {
+            if (!shouldPoolMessage) return new Message(MaxMessageSize);
+
             lock (pool)
             {
                 Message message;
@@ -167,6 +192,8 @@ namespace RiptideNetworking
         /// <summary>Returns the message instance to the internal pool so it can be reused.</summary>
         public void Release()
         {
+            if (!shouldPoolMessage) return;
+
             lock (pool)
             {
                 if (pool.Count < pool.Capacity)

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCameraTransform: {fileID: 1097013275630095918}
   playerController: {fileID: 815615430803821299}
-  mouseSensitivity: 4
+  mouseSensitivity: 400
 --- !u!1 &2253407164308587039
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 1117814427652935046}
   localPlayerInputInfo: {fileID: 165699076368279678}
   slopeLimit: 45
-  walkSpeed: 50
+  walkSpeed: 400
   sprintSpeed: 0
   jumpSpeed: 0
   strafeControl: 0

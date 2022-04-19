@@ -14,9 +14,9 @@ namespace HLRiptide.Networks
 {
     public class ServerNetwork : Network
     {
-        internal const ushort SERVER_NETWORK_ID = ushort.MaxValue;
-
         internal readonly Server Server;
+
+        private static Dictionary<ushort, MessageBuffer> messageBuffers;
 
         Action OnTick;
 
@@ -26,6 +26,8 @@ namespace HLRiptide.Networks
 
             Server.ClientConnected += OnClientConnected;
             Server.ClientDisconnected += OnClientDisconnect;
+
+            messageBuffers = new Dictionary<ushort, MessageBuffer>();
         }
 
         public override void Start(INetworkStartInfo networkStartInfo)
@@ -53,6 +55,8 @@ namespace HLRiptide.Networks
         {
             Server.Tick();
 
+            ExecuteMessagesFromMessageBuffers();
+
             OnTick?.Invoke();
 
             Server.SendToAll(messageGenerator.GenerateMessage(NetworkTick));
@@ -60,8 +64,21 @@ namespace HLRiptide.Networks
             SendIndividualClientMessages();
         }
 
+        private void ExecuteMessagesFromMessageBuffers()
+        {
+            foreach (KeyValuePair<ushort, MessageBuffer> networkIdMessageBufferPair in messageBuffers)
+            {
+                (uint tick, Message message) = networkIdMessageBufferPair.Value.PopMessageFromBuffer();
+
+                if (message == null) continue;
+
+                messageHandler.HandleMessage(NetworkManager.Singleton.NetworkedCommandContainer, NetworkManager.Singleton.NetworkedObjectContainer, message, tick, networkIdMessageBufferPair.Key);
+            }
+        }
+
         private void OnClientConnected(object sender, ServerClientConnectedEventArgs clientConnectedEventArgs)
         {
+            messageBuffers.Add(clientConnectedEventArgs.Client.Id, new MessageBuffer(3));
             networkSceneManager.OnServerClientConnect(clientConnectedEventArgs.Client.Id);
 
             clientJoinAction?.Invoke(clientConnectedEventArgs.Client.Id);
@@ -69,6 +86,8 @@ namespace HLRiptide.Networks
 
         private void OnClientDisconnect(object sender, ClientDisconnectedEventArgs clientDisconnectedEventArgs)
         {
+            messageBuffers.Remove(clientDisconnectedEventArgs.Id);
+
             clientLeaveAction?.Invoke(clientDisconnectedEventArgs.Id);
         }
 
@@ -88,7 +107,9 @@ namespace HLRiptide.Networks
         [MessageHandler((ushort)UniversalMessageId.message)]
         private static void HandleMessage(ushort fromClient, Message message)
         {
-            messageHandler.HandleMessage(NetworkManager.Singleton.NetworkedCommandContainer, NetworkManager.Singleton.NetworkedObjectContainer, message, fromClient);
+           // messageBuffers[fromClient].AddMessageToBuffer(message);
+
+            messageHandler.HandleMessage(NetworkManager.Singleton.NetworkedCommandContainer, NetworkManager.Singleton.NetworkedObjectContainer, message, message.GetUInt(), fromClient);
         }
     }
 }

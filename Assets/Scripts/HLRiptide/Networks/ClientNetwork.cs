@@ -32,7 +32,7 @@ namespace HLRiptide.Networks
             clientJoinAction = clientNetworkStartInfo.OnLocalClientConnect;
             clientLeaveAction = clientNetworkStartInfo.OnLocalClientDisconnect;
 
-            networkSceneManager = new NetworkSceneManager(null, null, null, null, null, clientNetworkStartInfo.OnLocalClientBeginLoadScene, clientNetworkStartInfo.OnLocalClientFinishLoadScene);
+            networkSceneManager = new NetworkSceneManager(null, null, null, null, clientNetworkStartInfo.OnLocalClientBeginLoadScene, clientNetworkStartInfo.OnLocalClientFinishLoadScene);
 
             Client.Connect($"{clientNetworkStartInfo.Ip}:{clientNetworkStartInfo.Port}");
         }
@@ -69,7 +69,9 @@ namespace HLRiptide.Networks
         [MessageHandler((ushort)UniversalMessageId.message)]
         private static void HandleMessage(Message message)
         {
-            messageHandler.HandleMessage(NetworkManager.Singleton.NetworkedCommandContainer, NetworkManager.Singleton.NetworkedObjectContainer, message, ushort.MaxValue);
+            uint tick = message.GetUInt();
+
+            messageHandler.HandleMessage(NetworkManager.Singleton.NetworkedCommandContainer, NetworkManager.Singleton.NetworkedObjectContainer, message, tick, ushort.MaxValue);
         }
     }
 }

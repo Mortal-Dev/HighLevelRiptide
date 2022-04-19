@@ -25,6 +25,9 @@ namespace HLRiptide.NetworkedCommand
             //object has already spawned, don't respawn it
             if (NetworkManager.Singleton.NetworkedObjectContainer.GetValue(networkedObjectInfo.objectInfo.id) != null) return;
 
+            //don't spawn anything if we're loading a scene
+            if (NetworkManager.Singleton.Network.networkSceneManager.IsLocalClientLoadingScene) return;
+
             GameObject go = Object.Instantiate(NetworkManager.Singleton.networkedObjectPrefabs[networkedObjectInfo.objectPrefabIndex].gameObject);
 
             NetworkedObject networkedObject = go.GetComponent<NetworkedObject>();

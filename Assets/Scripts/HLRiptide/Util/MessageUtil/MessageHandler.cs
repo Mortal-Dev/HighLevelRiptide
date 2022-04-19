@@ -13,16 +13,16 @@ namespace HLRiptide.Util.MessageUtil
 {
     class MessageHandler
     {
-        public void HandleMessage(Container<NetworkedCommandBase> networkedCommandContainer, Container<NetworkedObjects.NetworkedObject> networkedObjectContainer, Message message, ushort clientId)
+        public void HandleMessage(Container<NetworkedCommandBase> networkedCommandContainer, Container<NetworkedObject> networkedObjectContainer, Message message, uint tick, ushort clientId)
         {
-            uint tick = message.GetUInt();
+            if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.Network.networkSceneManager.IsLocalClientLoadingScene) return;
 
-            ExecuteNetworkedCommandsFromMessage(message, networkedCommandContainer, clientId);
+            ExecuteNetworkedCommandsFromMessage(message, networkedCommandContainer, tick, clientId);
 
             SetNetworkedObjectsFromMessage(message, networkedObjectContainer);
         }
 
-        private void ExecuteNetworkedCommandsFromMessage(Message message, Container<NetworkedCommandBase> networkedCommandContainer, ushort clientId)
+        private void ExecuteNetworkedCommandsFromMessage(Message message, Container<NetworkedCommandBase> networkedCommandContainer, uint tick, ushort clientId)
         {
             int commandCount = message.GetInt();
 
@@ -37,10 +37,11 @@ namespace HLRiptide.Util.MessageUtil
 
             NetworkedCommandBase networkedCommand = networkedCommandContainer.GetValue(networkedCommandId);
 
-            if (networkedCommand.networkWithAuthority == NetworkPermission.Client && NetworkManager.Singleton.IsServer || 
+            if (networkedCommand.networkWithAuthority == NetworkPermission.Client && NetworkManager.Singleton.IsServer ||
                 networkedCommand.networkWithAuthority == NetworkPermission.Server && NetworkManager.Singleton.IsClient)
             {
-                //if (networkedCommand.clientIdWithAuthority != clientId) return;
+                //TODO fix this
+                // if (networkedCommand.clientIdWithAuthority != clientId) return;
 
                 for (int i = 0; i < argCount; i++)
                 {
@@ -55,12 +56,14 @@ namespace HLRiptide.Util.MessageUtil
 
             foreach (NetworkedObjectInfo networkedObjectInfo in networkedObjectInfos)
             {
-                NetworkedObjects.NetworkedObject networkedObject = networkedObjectContainer.GetValue(networkedObjectInfo.id);
+                NetworkedObject networkedObject = networkedObjectContainer.GetValue(networkedObjectInfo.id);
 
                 if (networkedObject == null) continue;
 
                 //if we have authority over the object, ignore this
                 if (networkedObject.NetworkId == NetworkManager.Singleton.NetworkId) continue;
+
+
 
                 networkedObject.SetNetworkedObjectInfo(networkedObjectInfo);
             }

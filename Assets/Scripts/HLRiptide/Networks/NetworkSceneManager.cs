@@ -43,10 +43,10 @@ namespace HLRiptide.Networks
             NetworkManager.Singleton.OnServerClientDisconnect += OnServerClientDisconnect;
            // NetworkManager.Singleton.OnServerClientBeginConnected += OnServerClientConnect;
 
-            if (NetworkManager.Singleton.IsClient) SceneManager.sceneLoaded += OnLocalClientSceneChange;
+            if (!NetworkManager.Singleton.IsServer) SceneManager.sceneLoaded += OnLocalClientSceneChange;
             else SceneManager.sceneLoaded += OnServerSceneChange;
 
-            syncClientSceneToServerScene = new InternalNetworkedCommand<int>((uint)InternalCommandId.SyncClientToServerScene, NetworkedCommandPriority.High, NetworkPermission.Server, ClientSyncSceneToServer); //
+            syncClientSceneToServerScene = new InternalNetworkedCommand<int>((uint)InternalCommandId.SyncClientToServerScene, NetworkedCommandPriority.High, NetworkPermission.Server, LocalClientSyncSceneToServer); //
             clientFinishedLoadingSceneCommand = new InternalNetworkedCommand<ushort>((uint)InternalCommandId.ClientFinishedLoadingScene, NetworkedCommandPriority.High, NetworkPermission.Client, ServerClientFinishedLoadingScene); //
 
             serverClientsLoadingScene = new Dictionary<ushort, bool>();
@@ -57,15 +57,15 @@ namespace HLRiptide.Networks
 
         public bool IsServerClientLoadingScene(ushort id)
         {
-            if (serverClientsLoadingScene.TryGetValue(id, out bool value))
+            if (serverClientsLoadingScene.TryGetValue(id, out bool isServerClientLoadingScene))
             {
-                return value;
+                return isServerClientLoadingScene;
             }
 
             return false;
         }
 
-        private void ClientSyncSceneToServer(int buildIndex)
+        private void LocalClientSyncSceneToServer(int buildIndex)
         {
             IsLocalClientLoadingScene = true;
 
@@ -78,14 +78,14 @@ namespace HLRiptide.Networks
         {
             serverClientsLoadingScene[clientId] = false;
 
+            serverClientFinishedLoadingSceneAction?.Invoke(clientId);
+
             if (SceneManager.GetActiveScene().buildIndex == NetworkManager.Singleton.defaultSceneIndex && !serverClientHasLoadedDefaultScene[clientId])
             {
                 serverClientHasLoadedDefaultScene[clientId] = true;
                 serverClientFinishedConnectingAction?.Invoke(clientId);
             }
             
-            serverClientFinishedLoadingSceneAction?.Invoke(clientId);
-
             foreach (NetworkedObject networkedObject in NetworkManager.Singleton.NetworkedObjectContainer.ContainerDict.Values)
             {
                 InternalCommands.spawnObjectOnNetworkCommand.ExecuteCommandForClient(clientId, networkedObject.GetNetworkedObjectSpawnInfo());
@@ -110,9 +110,9 @@ namespace HLRiptide.Networks
 
         private void OnLocalClientSceneChange(Scene scene, LoadSceneMode loadSceneMode)
         {
-            AwakeNetworkedBehaviours();
-
             IsLocalClientLoadingScene = false;
+
+            AwakeNetworkedBehaviours();
 
             clientFinishedLoadingSceneCommand.ExecuteCommandOnNetwork(NetworkManager.Singleton.NetworkId);
 
