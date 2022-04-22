@@ -7,6 +7,7 @@ public class GameSettings : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        Application.runInBackground = true;
     }
 
     private void Start()

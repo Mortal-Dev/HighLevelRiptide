@@ -1,3 +1,4 @@
+using HLRiptide;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
             ui.Hide();
         }
 
-        startingUI.Show();
+        if (!NetworkManager.Singleton.IsServer) startingUI.Show();
     }
 
     public T GetView<T>() where T : UI

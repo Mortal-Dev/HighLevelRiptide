@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637847988252117105
-    m_Hash: 387928553
+      ticks: 637861827965063928
+    m_Hash: 3495392058
   m_LockFileStatus:
     m_FilePath: C:/Users/charl/unitygames/HighLevelRiptide-master/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637847988252186904
-    m_Hash: 2479437319
+      ticks: 637861827965103810
+    m_Hash: 894664828
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -212,6 +212,7 @@ m_PackageAssets:
         - 3.0.10
         - 3.0.12
         - 3.0.13
+        - 3.0.14
         compatible:
         - 1.0.2
         - 1.0.6
@@ -242,6 +243,7 @@ m_PackageAssets:
         - 3.0.10
         - 3.0.12
         - 3.0.13
+        - 3.0.14
         verified: 2.0.7
       dependencies:
       - name: com.unity.test-framework
@@ -934,55 +936,6 @@ m_PackageAssets:
       repository:
         type: 
         url: 
-        revision: 
-        path: 
-    - packageId: net.tomweiland.riptidenetworking@https://github.com/tom-weiland/RiptideNetworking.git?path=/UnityPackage
-      testable: 0
-      isDirectDependency: 1
-      version: 1.2.0
-      source: 5
-      resolvedPath: C:\Users\charl\unitygames\HighLevelRiptide-master\Library\PackageCache\net.tomweiland.riptidenetworking@ad1ce59d60
-      assetPath: Packages/net.tomweiland.riptidenetworking
-      name: net.tomweiland.riptidenetworking
-      displayName: RiptideNetworking
-      author:
-        name: Tom Weiland
-        email: contact@tomweiland.net
-        url: https://www.youtube.com/c/TomWeiland
-      category: 
-      type: 
-      description: RiptideNetworking is a lightweight C# networking library primarily
-        designed for use in multiplayer games.
-      status: 4
-      errors: []
-      versions:
-        all: []
-        compatible: []
-        verified: 
-      dependencies: []
-      resolvedDependencies: []
-      keywords:
-      - riptide
-      - networking
-      - multiplayer
-      registry:
-        id: 
-        name: 
-        url: 
-        scopes: []
-        isDefault: 0
-        capabilities: 0
-      hasRegistry: 0
-      hideInEditor: 1
-      entitlements:
-        isAllowed: 1
-      isAssetStorePackage: 0
-      datePublishedTicks: 0
-      documentationUrl: 
-      hasRepository: 1
-      repository:
-        type: git
-        url: https://github.com/tom-weiland/RiptideNetworking
         revision: 
         path: 
     - packageId: com.unity.modules.ai@1.0.0

@@ -79,11 +79,19 @@ namespace HLRiptide.NetworkedObjects
 
         private void Awake()
         {
-            if (NetworkManager.Singleton.IsClient) return;
-
-            if (destroyObjectWhenClientDisconnect)
+            if (NetworkManager.Singleton.IsServer)
             {
-                NetworkManager.Singleton.OnServerClientDisconnect += OnServerClientDisconnect;
+                if (NetworkId != ushort.MaxValue)
+                {
+                    DestroyRigidbody();
+
+                    DestroyColliders();
+                }
+
+                if (destroyObjectWhenClientDisconnect)
+                {
+                    NetworkManager.Singleton.OnServerClientDisconnect += OnServerClientDisconnect;
+                }
             }
         }
 
@@ -94,10 +102,6 @@ namespace HLRiptide.NetworkedObjects
             if (HasSpawnedOnNetwork) return;
 
             if (NetworkManager.Singleton.IsClient) throw new Exception("Cannot spawn objects on Client!");
-
-            DestroyRigidbody();
-
-            if (clientIdWithAuthority != ushort.MaxValue) DestroyColliders();
 
             InitProperties(clientIdWithAuthority);
 

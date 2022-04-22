@@ -20,5 +20,15 @@ namespace HLRiptide.Util.MessageUtil
         {
             return new NetworkedObjectInfo(message.GetUInt(), message.GetVector3(), message.GetVector3(), message.GetVector3());
         }
+
+        public static Vector3 GetVector3(this Message message)
+        {
+            return new Vector3(message.GetFloat(), message.GetFloat(), message.GetFloat());
+        }
+
+        public static Message Add(this Message message, Vector3 vector3)
+        {
+             return message.Add(vector3.x).Add(vector3.y).Add(vector3.z);
+        }
     }
 }
