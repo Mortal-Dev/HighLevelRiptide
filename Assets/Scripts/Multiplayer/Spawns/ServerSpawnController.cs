@@ -9,7 +9,7 @@ public class ServerSpawnController : NetworkedBehaviour
 {
     public GameObject playerGameObject;
 
-    Transform[] spawnPositons;
+    Transform[] spawnPositons = new Transform[1];
 
     public override void OnServerStart()
     {
@@ -23,7 +23,9 @@ public class ServerSpawnController : NetworkedBehaviour
     {
         GameObject go = Instantiate(playerGameObject);
 
-        //SetPlayerSpawn(go, 0);
+        go.transform.position = new Vector3(0, 3, 0);
+
+        SetPlayerSpawn(go, 0);
 
         go.GetComponent<NetworkedObject>().SpawnOnNetwork(id);
     }

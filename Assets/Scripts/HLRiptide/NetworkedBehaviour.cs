@@ -24,13 +24,15 @@ namespace HLRiptide
 
         public bool IsLocalPlayerWithAuthority => IsClient && IsLocalPlayer;
 
+        public bool HasAuthority => NetworkManager.Singleton.NetworkId == NetworkId;
+
         uint IId.Id { get; set; }
 
         internal readonly Dictionary<int, NetworkedCommandBase> networkedCommands = new Dictionary<int, NetworkedCommandBase>();
 
         private bool awoken = false;
 
-        public abstract void OnRegisterCommands();
+        public virtual void OnRegisterCommands() { }
 
         private void OnDestroy()
         {
@@ -73,7 +75,6 @@ namespace HLRiptide
             if (transform.root.gameObject.TryGetComponent(out NetworkedObjects.NetworkedObject networkedObject))
                 this.networkedObject = networkedObject;
             
-
             OnRegisterCommands();
 
             OnAwake();

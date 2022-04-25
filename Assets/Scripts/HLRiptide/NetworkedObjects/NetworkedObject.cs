@@ -103,6 +103,16 @@ namespace HLRiptide.NetworkedObjects
 
             if (NetworkManager.Singleton.IsClient) throw new Exception("Cannot spawn objects on Client!");
 
+            if (NetworkManager.Singleton.IsServer)
+            {
+                if (NetworkId != ushort.MaxValue)
+                {
+                    DestroyRigidbody();
+
+                    DestroyColliders();
+                }
+            }
+
             InitProperties(clientIdWithAuthority);
 
             NetworkManager.Singleton.NetworkedObjectContainer.RegisterValue(this);
@@ -141,16 +151,16 @@ namespace HLRiptide.NetworkedObjects
         {
             transform.localScale = networkedObjectInfo.scale;
 
-            if (NetworkManager.Singleton.IsClient)
+            /*if (NetworkManager.Singleton.IsClient)
             {
                 StartCoroutine(LerpPosition(networkedObjectInfo.position, Time.fixedDeltaTime));
                 StartCoroutine(LerpRotation(networkedObjectInfo.rotation, Time.fixedDeltaTime));
             }
             else
-            {
+            {*/
                 transform.position = networkedObjectInfo.position;
                 transform.rotation = Quaternion.Euler(networkedObjectInfo.rotation.x, networkedObjectInfo.rotation.y, networkedObjectInfo.rotation.z);
-            }
+            //}
         }
 
         internal NetworkedObjectInfo GetNetworkedObjectInfo()
