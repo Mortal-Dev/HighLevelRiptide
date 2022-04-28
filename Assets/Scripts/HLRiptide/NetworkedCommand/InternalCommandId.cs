@@ -4,7 +4,8 @@ namespace HLRiptide.NetworkedCommand
     {
         SpawnObject = 1,
         DestroyObject = 2,
-        SyncClientToServerScene = 3,
-        ClientFinishedLoadingScene = 4
+        SetObjectPermission = 3,
+        SyncClientToServerScene = 4,
+        ClientFinishedLoadingScene = 5
     }
 }

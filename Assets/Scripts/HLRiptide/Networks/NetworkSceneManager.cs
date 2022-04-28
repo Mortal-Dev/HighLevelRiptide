@@ -30,8 +30,6 @@ namespace HLRiptide.Networks
 
         private bool hasLoadedDefualtSceneOnce = false;
 
-        private int timesSceneLoaded = 0;
-
         public NetworkSceneManager(Action onServerStart, Action<ushort> serverClientFinishedConnecting, Action<ushort> serverClientBeginLoadingScene, Action<ushort> serverClientFinishedLoadingScene, Action<AsyncOperation> localClientBeginLoadingScene, Action<ushort> localClientFinishedLoadingScene)
         {
             this.onServerStart = onServerStart;

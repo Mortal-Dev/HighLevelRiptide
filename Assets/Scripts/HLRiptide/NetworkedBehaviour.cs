@@ -85,6 +85,13 @@ namespace HLRiptide
             OnStart();
         }
 
+        public void SetNetworkedObjectPermission(ushort networkId)
+        {
+            if (networkedObject == null) ThrowNoNetworkedObjectException();
+
+            networkedObject.SetPermissionOnNetwork(networkId);
+        }
+
         public void RegisterNetworkedCommand<T>(Action<T> command, NetworkPermission networkWithAuthority) where T : unmanaged
         {
             if (networkedObject == null) ThrowNoNetworkedObjectException();

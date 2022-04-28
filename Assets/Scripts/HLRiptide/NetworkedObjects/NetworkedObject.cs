@@ -129,7 +129,7 @@ namespace HLRiptide.NetworkedObjects
             Destroy(gameObject);
         }
 
-        internal void InitProperties(ushort networkId)
+        internal void InitProperties(ushort networkId, bool updatePastTransform = true)
         {
             NetworkId = networkId;
             IsLocalPlayer = CheckIfLocalPlayer();
@@ -137,7 +137,18 @@ namespace HLRiptide.NetworkedObjects
             HasSpawnedOnNetwork = true;
             SetNetworkPermission();
 
-            UpdatePastTransform();
+            if (updatePastTransform) UpdatePastTransform();
+        }
+
+        public void SetPermissionOnNetwork(ushort networkIdWithPermission)
+        {
+            IId id = this;
+
+            InitProperties(networkIdWithPermission, false);
+
+            NetworkedObjectUpdatePermissionInfo networkedObjectUpdatePermissionInfo = new NetworkedObjectUpdatePermissionInfo(id.Id, networkIdWithPermission);
+
+            InternalCommands.setNetworkedObjectPermissionCommand.ExecuteCommandOnNetwork(networkedObjectUpdatePermissionInfo);
         }
 
         internal void UpdatePastTransform()

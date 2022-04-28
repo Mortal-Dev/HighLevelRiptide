@@ -14,10 +14,13 @@ namespace HLRiptide.NetworkedCommand
 
         public static InternalNetworkedCommand<uint> destroyObjectOnNetworkCommand;
 
+        public static InternalNetworkedCommand<NetworkedObjectUpdatePermissionInfo> setNetworkedObjectPermissionCommand;
+
         internal static void Init()
         {
-            spawnObjectOnNetworkCommand = new InternalNetworkedCommand<NetworkedObjectSpawnInfo>((uint)InternalCommandId.SpawnObject, NetworkedCommandPriority.High, NetworkPermission.Server, SpawnObjectOnClient, NetworkedObjectSpawnInfo.AddCommandArgToMessage, NetworkedObjectSpawnInfo.GetCommandArgFromMessage); //
-            destroyObjectOnNetworkCommand = new InternalNetworkedCommand<uint>((uint)InternalCommandId.DestroyObject, NetworkedCommandPriority.Medium, NetworkPermission.Server, DestroyObjectOnClient); //
+            spawnObjectOnNetworkCommand = new InternalNetworkedCommand<NetworkedObjectSpawnInfo>((uint)InternalCommandId.SpawnObject, NetworkedCommandPriority.High, NetworkPermission.Server, SpawnObjectOnClient, NetworkedObjectSpawnInfo.AddCommandArgToMessage, NetworkedObjectSpawnInfo.GetCommandArgFromMessage);
+            destroyObjectOnNetworkCommand = new InternalNetworkedCommand<uint>((uint)InternalCommandId.DestroyObject, NetworkedCommandPriority.Medium, NetworkPermission.Server, DestroyObjectOnClient);
+            setNetworkedObjectPermissionCommand = new InternalNetworkedCommand<NetworkedObjectUpdatePermissionInfo>((uint)InternalCommandId.SetObjectPermission, NetworkedCommandPriority.Medium, NetworkPermission.Server, SetNetworkPermissionOfObject, NetworkedObjectUpdatePermissionInfo.AddCommandArgToMessage, NetworkedObjectUpdatePermissionInfo.GetCommandArgsFromMessage);
         }
 
         internal static void SpawnObjectOnClient(NetworkedObjectSpawnInfo networkedObjectInfo)
@@ -50,6 +53,15 @@ namespace HLRiptide.NetworkedCommand
             Object.Destroy(go);
 
             NetworkManager.Singleton.NetworkedObjectContainer.RemoveValue(id);
+        }
+
+        internal static void SetNetworkPermissionOfObject(NetworkedObjectUpdatePermissionInfo networkedObjectUpdatePermissionInfo)
+        {
+            NetworkedObject networkedObject = NetworkManager.Singleton.NetworkedObjectContainer.GetValue(networkedObjectUpdatePermissionInfo.id);
+
+            if (networkedObject == null) return;
+
+            networkedObject.InitProperties(networkedObjectUpdatePermissionInfo.networkId, false);
         }
 
         internal static void SetCommandIdsInNetworkedBehaviours(NetworkedBehaviour[] networkedBehaviours, List<int[]> commandHashCodes, List<uint[]> overrideIds)
