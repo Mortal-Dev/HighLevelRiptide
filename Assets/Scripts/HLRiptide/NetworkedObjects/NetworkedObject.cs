@@ -169,8 +169,7 @@ namespace HLRiptide.NetworkedObjects
             }
             else
             {*/
-                transform.position = networkedObjectInfo.position;
-                transform.rotation = Quaternion.Euler(networkedObjectInfo.rotation.x, networkedObjectInfo.rotation.y, networkedObjectInfo.rotation.z);
+                transform.SetPositionAndRotation(networkedObjectInfo.position, Quaternion.Euler(networkedObjectInfo.rotation.x, networkedObjectInfo.rotation.y, networkedObjectInfo.rotation.z));
             //}
         }
 
@@ -194,8 +193,7 @@ namespace HLRiptide.NetworkedObjects
         }
 
         private void DestroyColliders()
-        { 
-
+        {
             if (TryGetComponent(out Collider baseCollider))
             {
                 Destroy(baseCollider);

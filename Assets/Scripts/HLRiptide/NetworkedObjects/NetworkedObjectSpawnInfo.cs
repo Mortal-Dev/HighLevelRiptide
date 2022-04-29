@@ -1,8 +1,6 @@
 using RiptideNetworking;
 using System.Collections.Generic;
 using HLRiptide.Util.MessageUtil;
-using Unity.Collections;
-using UnityEngine;
 
 namespace HLRiptide.NetworkedObjects
 {

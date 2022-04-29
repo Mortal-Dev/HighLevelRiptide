@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using System.Text;
-using System.Threading.Tasks;
-using RiptideNetworking;
+﻿using UnityEngine;
 
 namespace HLRiptide.NetworkedObjects
 {

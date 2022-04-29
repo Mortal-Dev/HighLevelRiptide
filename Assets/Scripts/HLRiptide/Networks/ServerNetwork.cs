@@ -1,14 +1,8 @@
-﻿using HLRiptide.NetworkedCommand;
-using HLRiptide.Util.ContainerUtil;
-using HLRiptide.Util.MessageUtil;
+﻿using HLRiptide.Util.MessageUtil;
 using RiptideNetworking;
 using RiptideNetworking.Transports;
-using RiptideNetworking.Transports.RudpTransport;
-using RiptideNetworking.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace HLRiptide.Networks
 {

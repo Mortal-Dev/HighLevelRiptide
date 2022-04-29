@@ -1,7 +1,4 @@
 ﻿using HLRiptide.Util.MessageUtil;
-using HLRiptide.NetworkedObjects;
-using RiptideNetworking;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using RiptideNetworking.Utils;

@@ -1,14 +1,9 @@
-﻿using HLRiptide.Util.MessageUtil;
-using HLRiptide.NetworkedCommand;
+﻿using HLRiptide.NetworkedCommand;
 using HLRiptide.Util.ContainerUtil;
 using RiptideNetworking;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HLRiptide.Networks;
-using UnityEngine;
 using HLRiptide.NetworkedObjects;
 
 namespace HLRiptide.Util.MessageUtil

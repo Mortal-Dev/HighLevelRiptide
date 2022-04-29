@@ -2,13 +2,11 @@ using HLRiptide.NetworkedCommand;
 using HLRiptide.NetworkedObjects;
 using HLRiptide.Networks;
 using HLRiptide.Util.ContainerUtil;
-using HLRiptide.Util.MessageUtil;
 using RiptideNetworking.Utils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using Network = HLRiptide.Networks.Network;
 
 namespace HLRiptide
 {
@@ -64,7 +62,7 @@ namespace HLRiptide
 
         internal Container<NetworkedCommandBase> NetworkedCommandContainer { get; private set; }
 
-        internal Networks.Network Network { get; private set; }
+        internal Network Network { get; private set; }
 
         //unity inspector fields
         [Header("Prefabs that can be used across the network")]
