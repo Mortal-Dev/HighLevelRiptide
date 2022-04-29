@@ -74,7 +74,7 @@ namespace HLRiptide.NetworkedObjects
                 }
             }
 
-            if (NetworkManager.Singleton.NetworkedCommandContainer.GetValue(this) != null) NetworkManager.Singleton.NetworkedCommandContainer.RemoveValue(this);
+            NetworkManager.Singleton.NetworkedObjectContainer.RemoveValue(this);
         }
 
         private void Awake()
