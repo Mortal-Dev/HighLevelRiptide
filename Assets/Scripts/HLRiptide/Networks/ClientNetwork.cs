@@ -22,11 +22,10 @@ namespace HLRiptide.Networks
             ClientNetworkStartInfo clientNetworkStartInfo = (ClientNetworkStartInfo)networkStartInfo;
 
             OnTick = clientNetworkStartInfo.OnTick;
-
-            clientJoinAction = clientNetworkStartInfo.OnLocalClientConnect;
+            clientJoinAction = clientNetworkStartInfo.OnLocalClientBeginConnect;
             clientLeaveAction = clientNetworkStartInfo.OnLocalClientDisconnect;
 
-            networkSceneManager = new NetworkSceneManager(null, null, null, null, clientNetworkStartInfo.OnLocalClientBeginLoadScene, clientNetworkStartInfo.OnLocalClientFinishLoadScene);
+            networkSceneManager = new NetworkSceneManager(clientNetworkStartInfo.OnLocalClientFinishConnect, clientNetworkStartInfo.OnLocalClientBeginLoadScene, clientNetworkStartInfo.OnLocalClientFinishLoadScene);
 
             Client.Connect($"{clientNetworkStartInfo.Ip}:{clientNetworkStartInfo.Port}");
         }

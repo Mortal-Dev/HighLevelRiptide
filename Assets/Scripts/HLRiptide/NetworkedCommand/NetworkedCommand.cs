@@ -16,7 +16,7 @@ namespace HLRiptide.NetworkedCommand
         public NetworkedCommand(NetworkPermission networkWithAuthority, Action<T> networkedCommand, Action<Message, T> addCommandArgToMessage = null,
             Func<Message, T> getCommandArgFromMessage = null) : base(networkWithAuthority, NetworkedCommandPriority.Low)
         {
-            NetworkManager.Singleton.OnLocalClientConnect += OnLocalClientConnect;
+            NetworkManager.Singleton.OnLocalClientFinishConnect += OnLocalClientConnect;
 
             this.networkedCommand = networkedCommand;
 
@@ -34,7 +34,7 @@ namespace HLRiptide.NetworkedCommand
 
         ~NetworkedCommand()
         {
-            NetworkManager.Singleton.OnLocalClientConnect -= OnLocalClientConnect;
+            NetworkManager.Singleton.OnLocalClientFinishConnect -= OnLocalClientConnect;
         }
 
         public override void ExecuteCommandOnNetwork(object arg)

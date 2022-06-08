@@ -121,37 +121,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2384}
     - Class: 114
-      Script: {instanceID: 2514}
+      Script: {instanceID: 2512}
     - Class: 114
-      Script: {instanceID: 2528}
+      Script: {instanceID: 2526}
     - Class: 114
-      Script: {instanceID: 2622}
+      Script: {instanceID: 2620}
     - Class: 114
-      Script: {instanceID: 2632}
+      Script: {instanceID: 2630}
     - Class: 114
       Script: {instanceID: 2640}
     - Class: 114
       Script: {instanceID: 2676}
     - Class: 114
-      Script: {instanceID: 2804}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 2988}
+      Script: {instanceID: 2990}
     - Class: 114
-      Script: {instanceID: 3080}
+      Script: {instanceID: 3082}
     - Class: 114
-      Script: {instanceID: 3096}
+      Script: {instanceID: 3098}
     - Class: 114
-      Script: {instanceID: 3422}
+      Script: {instanceID: 3426}
     - Class: 114
-      Script: {instanceID: 4042}
+      Script: {instanceID: 4044}
     - Class: 114
-      Script: {instanceID: 4060}
+      Script: {instanceID: 4062}
     - Class: 114
-      Script: {instanceID: 4328}
+      Script: {instanceID: 4330}
     - Class: 114
-      Script: {instanceID: 4372}
+      Script: {instanceID: 4374}
     - Class: 114
-      Script: {instanceID: 4462}
+      Script: {instanceID: 4464}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -279,7 +279,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 41adb64a8b82591964e4d27c2a7622f4
+      Hash: 82dc6f0ee31f4a252b5f8d2ee37037de
     assemblyName: Assembly-CSharp.dll
     namespaceName: HLRiptide
     className: NetworkManager
@@ -677,4 +677,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Main.unity
   - Assets/Scenes/Level-1.unity
-  playerPath: C:/Users/charl/unitygames/HighLevelRiptide-master/Builds/Client/HighLevelRiptide.exe
+  playerPath: C:/Users/charl/unitygames/HighLevelRiptide-master/Builds/Server/HighLevelRiptide.exe

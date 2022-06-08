@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Multiplayer\Spawns\Spawn.cs" />
@@ -63,18 +63,19 @@
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalCommandId.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\SprintingState.cs" />
     <Compile Include="Assets\Scripts\UI\StartMenuUI.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManager.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\NetworkSceneManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\MidairState.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\ClientNetworkStartInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\StartInfo\HostNetworkStartInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\ServerNetworkStartInfo.cs" />
     <Compile Include="Assets\Scripts\GameSettings.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\StartInfo\ClientNetworkStartInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\ContainerUtil\Container.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Spawns\ServerSpawnController.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageGenerator.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\StartInfo\ServerNetworkStartInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkPermission.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\ClientNetwork.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\ContainerUtil\Iid.cs" />
@@ -85,10 +86,11 @@
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\IState.cs" />
     <Compile Include="Assets\Scripts\UI\UI.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\HostNetwork.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedBehaviour.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingUI.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\ServerNetwork.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\INetworkStartInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\StartInfo\INetworkStartInfo.cs" />
     <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\NetworkedCommandBase.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectSpawnInfo.cs" />
@@ -101,6 +103,9 @@
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalNetworkedCommand.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectUpdatePermissionInfo.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\ServerStarter.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\HostSceneManager.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\ClientSceneManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />

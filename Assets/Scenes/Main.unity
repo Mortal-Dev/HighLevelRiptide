@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 995160549}
   - component: {fileID: 995160548}
   - component: {fileID: 995160550}
+  - component: {fileID: 995160551}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1299,10 +1300,6 @@ MonoBehaviour:
   - {fileID: -6647866091979702367, guid: acdfbd5699589804d8b834a4a16d8de5, type: 3}
   runOnFixedUpdate: 1
   updateRate: 1
-  startServerInstantly: 0
-  defaultPort: 2700
-  maxPlayerCount: 5
-  defaultSceneIndex: 1
 --- !u!4 &995160549
 Transform:
   m_ObjectHideFlags: 0
@@ -1330,6 +1327,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGameObject: {fileID: 2253407164308587039, guid: acdfbd5699589804d8b834a4a16d8de5, type: 3}
+--- !u!114 &995160551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995160547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372b9fb052832cd48809de23b7d5c4ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isServer: 0
 --- !u!1 &1061049741
 GameObject:
   m_ObjectHideFlags: 0

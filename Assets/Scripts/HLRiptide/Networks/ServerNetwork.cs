@@ -35,7 +35,7 @@ namespace HLRiptide.Networks
 
             Server.Start(serverNetworkStartInfo.Port, serverNetworkStartInfo.MaxPlayerCount);
 
-            networkSceneManager = new NetworkSceneManager(serverNetworkStartInfo.OnServerStart, serverNetworkStartInfo.OnServerClientFinishedConnecting, serverNetworkStartInfo.OnServerClientBeginLoadScene, serverNetworkStartInfo.OnServerClientFinishLoadScene, null, null);
+            networkSceneManager = new NetworkSceneManager(serverNetworkStartInfo.OnServerStart, serverNetworkStartInfo.OnServerClientFinishedConnecting, serverNetworkStartInfo.OnServerClientBeginLoadScene, serverNetworkStartInfo.OnServerClientFinishLoadScene);
 
             NetworkManager.Singleton.NetworkId = ushort.MaxValue;
         }
