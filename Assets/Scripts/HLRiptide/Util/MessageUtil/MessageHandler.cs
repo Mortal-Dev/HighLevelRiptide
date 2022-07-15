@@ -3,6 +3,7 @@ using HLRiptide.NetworkedObjects;
 using HLRiptide.Util.ContainerUtil;
 using RiptideNetworking;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HLRiptide.Util.MessageUtil
 {
@@ -35,6 +36,7 @@ namespace HLRiptide.Util.MessageUtil
             if (networkedCommand.networkWithAuthority == NetworkPermission.Client && NetworkManager.Singleton.IsServer ||
                 networkedCommand.networkWithAuthority == NetworkPermission.Server && NetworkManager.Singleton.IsClient)
             {
+                Debug.Log($"{networkedCommand.clientIdWithAuthority} {clientId}");
                 //TODO fix this
                 // if (networkedCommand.clientIdWithAuthority != clientId) return;
 
@@ -57,8 +59,6 @@ namespace HLRiptide.Util.MessageUtil
 
                 //if we have authority over the object, ignore this
                 if (networkedObject.NetworkId == NetworkManager.Singleton.NetworkId) continue;
-
-
 
                 networkedObject.SetNetworkedObjectInfo(networkedObjectInfo);
             }

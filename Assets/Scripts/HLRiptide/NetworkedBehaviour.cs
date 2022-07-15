@@ -29,6 +29,8 @@ namespace HLRiptide
 
         internal readonly Dictionary<int, NetworkedCommandBase> networkedCommands = new Dictionary<int, NetworkedCommandBase>();
 
+        private Dictionary<object, int> networkedCommandCache = new Dictionary<object, int>();
+
         private bool awoken = false;
 
         public virtual void OnRegisterCommands() { }
@@ -97,6 +99,8 @@ namespace HLRiptide
 
             NetworkedCommand<T> networkedCommand = new NetworkedCommand<T>(networkWithAuthority, command);
 
+            networkedCommandCache.Add(command, command.Method.Name.GetHashCode());
+
             networkedCommands[command.Method.Name.GetHashCode()] = networkedCommand;
         }
 
@@ -106,14 +110,14 @@ namespace HLRiptide
 
             NetworkedCommand<T> networkedCommand = new NetworkedCommand<T>(networkWithAuthority, command, addCommandArgToMessage, getCommandArgFromMessage);
 
-            networkedCommands[command.Method.Name.GetHashCode()] = networkedCommand;
+            networkedCommands[networkedCommandCache[command]] = networkedCommand;
         }
 
         public void ExecuteCommandOnNetwork<T>(Action<T> command, T arg)
         {
             if (networkedObject == null) ThrowNoNetworkedObjectException();
 
-            if (networkedCommands.TryGetValue(command.Method.Name.GetHashCode(), out NetworkedCommandBase networkedCommandBase))
+            if (networkedCommands.TryGetValue(networkedCommandCache[command], out NetworkedCommandBase networkedCommandBase))
             {
                 networkedCommandBase.ExecuteCommandOnNetwork(arg);
             }
@@ -162,6 +166,7 @@ namespace HLRiptide
             return commandHashs.ToArray();
         }
 
+        //could potentialluse to fix permissions?
         internal void OverrideCommandIds(int[] commandHashCodes, uint[] newIds)
         {
             for (int i = 0; i < newIds.Length; i++)
