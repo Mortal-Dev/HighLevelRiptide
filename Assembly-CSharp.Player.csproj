@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Multiplayer\Spawns\Spawn.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\SerializeUtil\PrimativeSerializers.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\ServerSceneManager.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalCommands.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageHandler.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalCommandId.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Assets\Scripts\UI\StartMenuUI.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\NetworkSceneManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\MidairState.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\StartInfo\HostNetworkStartInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\GameSettings.cs" />
@@ -86,7 +86,6 @@
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\IState.cs" />
     <Compile Include="Assets\Scripts\UI\UI.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\HostNetwork.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedBehaviour.cs" />
     <Compile Include="Assets\Scripts\UI\LoadingUI.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\ServerNetwork.cs" />
@@ -95,17 +94,17 @@
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\NetworkedCommandBase.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectSpawnInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageBuffer.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\ClientSceneManager.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Networks\Network.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\LocalPlayerInputInfo.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\GroundStateUtil.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\PlayerCameraController.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Player\States\WalkingState.cs" />
+    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\BaseNetworkSceneManager.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedCommand\InternalNetworkedCommand.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\Util\MessageUtil\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\NetworkedObjects\NetworkedObjectUpdatePermissionInfo.cs" />
     <Compile Include="Assets\Scripts\HLRiptide\ServerStarter.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\HostSceneManager.cs" />
-    <Compile Include="Assets\Scripts\HLRiptide\Networks\NetworkSceneManagers\ClientSceneManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />

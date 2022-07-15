@@ -32,6 +32,7 @@ namespace HLRiptide.NetworkedCommand
             }
         }
 
+        //TODO implement IDispoable instead, destructors are inconsistent in GC languages
         ~NetworkedCommand()
         {
             NetworkManager.Singleton.OnLocalClientFinishConnect -= OnLocalClientConnect;

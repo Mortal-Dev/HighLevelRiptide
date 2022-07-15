@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using RiptideNetworking.Utils;
+using HLRiptide.Networks.NetworkSceneManagers;
 
 namespace HLRiptide.Networks
 {
@@ -22,6 +23,8 @@ namespace HLRiptide.Networks
         internal Action<ushort> clientLeaveAction;
 
         internal NetworkSceneManager networkSceneManager;
+
+        internal BaseNetworkSceneManager baseNetworkSceneManager;
 
         public Network()
         {

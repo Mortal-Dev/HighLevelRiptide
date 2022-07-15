@@ -323,8 +323,8 @@
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Help\HelpPanel.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\UnityConfigurationChecker.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Views\CreateWorkspace\CreateWorkspaceViewState.cs" />
-    <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Views\PendingChanges\DrawCommentTextArea.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Views\IncomingChanges\Gluon\IncomingChangesTreeHeaderState.cs" />
+    <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Views\PendingChanges\DrawCommentTextArea.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Configuration\CloudEdition\Welcome\OrganizationPanel.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\WorkspaceWindow.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.15.4\Editor\PlasticSCM\Views\IncomingChanges\Developer\IncomingChangesTreeHeaderState.cs" />

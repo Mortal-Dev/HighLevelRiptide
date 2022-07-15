@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - PlayerCameraController
     - PlayerController
     - ServerSpawnController
+    - ServerStarter
     - Spawn
     - StartMenuUI
     - UIManager
@@ -107,51 +108,53 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1700}
     - Class: 114
-      Script: {instanceID: 1790}
+      Script: {instanceID: 1792}
     - Class: 114
-      Script: {instanceID: 1832}
+      Script: {instanceID: 1834}
     - Class: 114
-      Script: {instanceID: 1918}
+      Script: {instanceID: 1920}
     - Class: 114
-      Script: {instanceID: 2166}
+      Script: {instanceID: 2168}
     - Class: 114
-      Script: {instanceID: 2202}
+      Script: {instanceID: 2204}
     - Class: 114
-      Script: {instanceID: 2358}
+      Script: {instanceID: 2360}
     - Class: 114
-      Script: {instanceID: 2384}
+      Script: {instanceID: 2386}
     - Class: 114
-      Script: {instanceID: 2512}
+      Script: {instanceID: 2514}
     - Class: 114
-      Script: {instanceID: 2526}
+      Script: {instanceID: 2528}
     - Class: 114
-      Script: {instanceID: 2620}
+      Script: {instanceID: 2622}
     - Class: 114
-      Script: {instanceID: 2630}
+      Script: {instanceID: 2632}
     - Class: 114
-      Script: {instanceID: 2640}
+      Script: {instanceID: 2642}
     - Class: 114
-      Script: {instanceID: 2676}
+      Script: {instanceID: 2678}
     - Class: 114
-      Script: {instanceID: 2806}
+      Script: {instanceID: 2808}
     - Class: 114
-      Script: {instanceID: 2990}
+      Script: {instanceID: 2992}
     - Class: 114
-      Script: {instanceID: 3082}
+      Script: {instanceID: 3084}
     - Class: 114
-      Script: {instanceID: 3098}
+      Script: {instanceID: 3100}
     - Class: 114
-      Script: {instanceID: 3426}
+      Script: {instanceID: 3428}
     - Class: 114
-      Script: {instanceID: 4044}
+      Script: {instanceID: 4048}
     - Class: 114
-      Script: {instanceID: 4062}
+      Script: {instanceID: 4066}
     - Class: 114
-      Script: {instanceID: 4330}
+      Script: {instanceID: 4336}
     - Class: 114
-      Script: {instanceID: 4374}
+      Script: {instanceID: 4380}
     - Class: 114
-      Script: {instanceID: 4464}
+      Script: {instanceID: 4470}
+    - Class: 114
+      Script: {instanceID: 4772}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -279,7 +282,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 82dc6f0ee31f4a252b5f8d2ee37037de
+      Hash: 0b59b547fd96808d16f11fc15fba0891
     assemblyName: Assembly-CSharp.dll
     namespaceName: HLRiptide
     className: NetworkManager
@@ -673,8 +676,14 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: 8fc418f27f5eb759d85f676644109e92
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ServerStarter
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity
   - Assets/Scenes/Level-1.unity
-  playerPath: C:/Users/charl/unitygames/HighLevelRiptide-master/Builds/Server/HighLevelRiptide.exe
+  playerPath: C:/Users/charl/unitygames/HighLevelRiptide-master/Builds/Client/HighLevelRiptide.exe

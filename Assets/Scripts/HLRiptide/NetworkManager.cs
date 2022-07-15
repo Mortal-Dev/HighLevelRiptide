@@ -134,10 +134,19 @@ namespace HLRiptide
         public delegate void OnTickAction();
         public event OnTickAction OnTick;
 
+        /// <summary>
+        /// holds all networked objects for the scene
+        /// </summary>
         internal Container<NetworkedObject> NetworkedObjectContainer { get; private set; }
 
+        /// <summary>
+        /// holds all networked commands for the scene
+        /// </summary>
         internal Container<NetworkedCommandBase> NetworkedCommandContainer { get; private set; }
 
+        /// <summary>
+        /// the Network object that allows communication between other networks
+        /// </summary>
         internal Network Network { get; private set; }
 
         //unity inspector fields
@@ -173,24 +182,6 @@ namespace HLRiptide
 
             if (runOnFixedUpdate) StepTime = Time.fixedDeltaTime;
             else StepTime = updateRate;
-        }
-
-        public void StartHost(ushort port, ushort maxPlayer, int defaultSceneIndex)
-        {
-            IsClient = true;
-            IsServer = true;
-            IsHost = true;
-
-            Network = new HostNetwork();
-
-            serverSceneIndex = defaultSceneIndex;
-
-            Network.Start(new HostNetworkStartInfo(new ServerNetworkStartInfo(() => OnServerStart?.Invoke(), (ushort id) => OnServerClientBeginConnected?.Invoke(id), (ushort id) => OnServerClientFinishConnected?.Invoke(id),
-                (ushort id) => OnServerClientDisconnect?.Invoke(id), (ushort id) => OnServerClientBeginLoadScene?.Invoke(id), (ushort id) => OnServerClientFinishLoadScene?.Invoke(id),
-                () => OnTick?.Invoke(), defaultSceneIndex, port, maxPlayer), new ClientNetworkStartInfo((ushort id) => OnLocalClientBeginConnect?.Invoke(id), (ushort id) => OnLocalClientFinishConnect?.Invoke(id), (ushort id) => OnLocalClientDisconnect?.Invoke(),
-                (AsyncOperation asyncOperation) => OnLocalClientBeginSceneLoad?.Invoke(asyncOperation), (ushort id) => OnLocalClientFinishSceneLoad?.Invoke(id), () => OnTick?.Invoke(), "127.0.0.1", port)));
-
-            SceneManager.LoadScene(defaultSceneIndex);
         }
         
         public void StartServer(ushort port, ushort maxPlayer, int defaultSceneIndex)

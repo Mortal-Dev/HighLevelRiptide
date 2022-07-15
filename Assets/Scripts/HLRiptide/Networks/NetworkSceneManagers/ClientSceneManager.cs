@@ -9,14 +9,11 @@ using UnityEngine.SceneManagement;
 
 namespace HLRiptide.Networks.NetworkSceneManagers
 {
-    public class ClientSceneManager
+    public class ClientSceneManager : BaseNetworkSceneManager
     {
         private readonly Action<ushort> localClientFinishConnectingAction;
         private readonly Action<AsyncOperation> localClientBeginLoadingSceneAction;
         private readonly Action<ushort> localClientFinishedLoadingSceneAction;
-
-        private readonly InternalNetworkedCommand<int> syncClientSceneToServerScene;
-        private readonly InternalNetworkedCommand<ushort> clientFinishedLoadingSceneCommand;
 
         private bool hasLoadedDefualtSceneOnce = false;
 
@@ -51,6 +48,8 @@ namespace HLRiptide.Networks.NetworkSceneManagers
 
             AwakeNetworkedBehaviours();
 
+            clientFinishedLoadingSceneCommand.ExecuteCommandOnNetwork(NetworkManager.Singleton.NetworkId);
+
             localClientFinishedLoadingSceneAction?.Invoke(NetworkManager.Singleton.NetworkId);
 
             if (!hasLoadedDefualtSceneOnce)
@@ -58,13 +57,6 @@ namespace HLRiptide.Networks.NetworkSceneManagers
                 localClientFinishConnectingAction?.Invoke(NetworkManager.Singleton.NetworkId);
                 hasLoadedDefualtSceneOnce = true;
             }
-        }
-
-        private void AwakeNetworkedBehaviours()
-        {
-            NetworkedBehaviour[] networkedBehaviours = UnityEngine.Object.FindObjectsOfType(typeof(NetworkedBehaviour)) as NetworkedBehaviour[];
-
-            foreach (NetworkedBehaviour networkedBehaviour in networkedBehaviours) networkedBehaviour.InternalAwake();
         }
     }
 }

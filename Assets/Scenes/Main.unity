@@ -1299,7 +1299,7 @@ MonoBehaviour:
   networkedObjectPrefabs:
   - {fileID: -6647866091979702367, guid: acdfbd5699589804d8b834a4a16d8de5, type: 3}
   runOnFixedUpdate: 1
-  updateRate: 1
+  updateRate: 0.1
 --- !u!4 &995160549
 Transform:
   m_ObjectHideFlags: 0
