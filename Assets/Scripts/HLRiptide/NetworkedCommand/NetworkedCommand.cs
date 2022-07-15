@@ -38,15 +38,22 @@ namespace HLRiptide.NetworkedCommand
             NetworkManager.Singleton.OnLocalClientFinishConnect -= OnLocalClientConnect;
         }
 
+        /// <summary>
+        /// executed the command on the connected network (Client -> Server, Server -> Client)
+        /// </summary>
+        /// <param name="arg"></param>
         public override void ExecuteCommandOnNetwork(object arg)
         {
             if (!NetworkPermissionMatches()) ThrowNetworkPermissionExcpetion();
 
-            
-
             bufferedCommandArgs.Add(arg);
         }
 
+        /// <summary>
+        /// executes the command for a specific client network
+        /// </summary>
+        /// <param name="id">id of client</param>
+        /// <param name="arg">argument to be send with the command</param>
         public void ExecuteCommandForClient(ushort id, T arg)
         {
             if (NetworkManager.Singleton.IsClient || networkWithAuthority == NetworkPermission.Client) ThrowNetworkPermissionExcpetion();
