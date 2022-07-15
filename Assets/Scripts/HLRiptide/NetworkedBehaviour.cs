@@ -29,7 +29,7 @@ namespace HLRiptide
 
         internal readonly Dictionary<int, NetworkedCommandBase> networkedCommands = new Dictionary<int, NetworkedCommandBase>();
 
-        private Dictionary<object, int> networkedCommandCache = new Dictionary<object, int>();
+        private readonly Dictionary<object, int> networkedCommandCache = new Dictionary<object, int>();
 
         private bool awoken = false;
 
@@ -166,7 +166,7 @@ namespace HLRiptide
             return commandHashs.ToArray();
         }
 
-        //could potentialluse to fix permissions?
+        //could potentialy use to fix command permission problem?
         internal void OverrideCommandIds(int[] commandHashCodes, uint[] newIds)
         {
             for (int i = 0; i < newIds.Length; i++)
