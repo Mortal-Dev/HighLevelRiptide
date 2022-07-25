@@ -2,7 +2,7 @@
 
 High level riptide (HLR) uses Riptide to create a simple, fast, and easy to use Netcode solution similar to Mirror.
 
-The reason I made this was because I was unhappy with the aggressive use of reflection in Mirror, and decided to create my own solution using a slightly modified version of Riptide.
+The reason I made this was because I was unhappy with the API in Mirror, and decided to create my own solution using a slightly modified version of Riptide for data transport.
 
 HLR is faster mostly because of the use of types and caching, allowing speedy execution of command methods.
 
