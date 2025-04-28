@@ -9,7 +9,7 @@ public class ServerSpawnController : NetworkedBehaviour
 {
     public GameObject playerGameObject;
 
-    Transform[] spawnPositons = new Transform[1];
+    private Transform[] spawnPositons = new Transform[1];
 
     public override void OnServerStart()
     {
