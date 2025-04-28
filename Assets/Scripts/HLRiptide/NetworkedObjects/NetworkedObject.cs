@@ -11,7 +11,6 @@ namespace HLRiptide.NetworkedObjects
     {
         uint IId.Id { get; set; }
 
-        //display properties in inspector
         [SerializeField] private ushort networkId;
         [SerializeField] private bool isLocalPlayer;
         [SerializeField] private bool destroyObjectWhenClientDisconnect;
