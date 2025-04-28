@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class PlayerCameraController : NetworkedBehaviour
 {
-    private Camera mainCamera;
     public Transform playerCameraTransform;
     public PlayerController playerController;
+
+    private Camera mainCamera;
 
     public float mouseSensitivity;
 
