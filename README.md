@@ -17,7 +17,7 @@
 
 ### Prerequisites
 
-- Unity 2020 or newer
+- Unity
 - [RiptideNetworking](https://github.com/RiptideNetworking/Riptide)
 
 ### Installation
